@@ -8,7 +8,7 @@ type NodeData = {};
 type EncodeFigNode = Node<NodeData>;
 
 export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
-  const [pastedData] = useAtom(atoms.pastedData);
+  const [clipboardFig] = useAtom(atoms.clipboardFig);
 
   return (
     <div className="flex flex-col bg-white border rounded-lg shadow w-72 nowheel cursor-grab border-slate-300">
@@ -22,7 +22,7 @@ export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
             Reusing the extracted schema
           </div>
         </div>
-        {pastedData.encodedModifiedData.length > 0 && (
+        {clipboardFig.encodedModifiedData.length > 0 && (
           <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
             Encoded data successfully
           </div>
@@ -30,14 +30,14 @@ export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Data size (decompressed)</p>
           <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md text-slate-700 bg-slate-100">
-            {pastedData.decompressedEncodedDataSize > 0 && (
+            {clipboardFig.inflatedData.length > 0 && (
               <p className="w-full break-words">
-                {pastedData.decompressedEncodedDataSize}
+                {clipboardFig.inflatedData.length}
               </p>
             )}
           </div>
         </div>
-        {pastedData.compressedEncodedDataSize > 0 && (
+        {clipboardFig.deflatedModifiedData.length > 0 && (
           <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
             Compressed data successfully
           </div>
@@ -45,9 +45,9 @@ export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Data size (compressed)</p>
           <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md text-slate-700 bg-slate-100">
-            {pastedData.compressedEncodedDataSize > 0 && (
+            {clipboardFig.deflatedModifiedData.length > 0 && (
               <p className="w-full break-words">
-                {pastedData.compressedEncodedDataSize}
+                {clipboardFig.deflatedModifiedData.length}
               </p>
             )}
           </div>
@@ -55,9 +55,9 @@ export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Exported fig</p>
           <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md h-80 text-slate-700 bg-slate-100">
-            {!_.isEmpty(pastedData.base64Exported) && (
+            {!_.isEmpty(clipboardFig.exportedData) && (
               <p className="w-full text-sm break-words">
-                {pastedData.base64Exported}
+                {clipboardFig.exportedData}
               </p>
             )}
           </div>

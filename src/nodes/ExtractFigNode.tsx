@@ -7,7 +7,7 @@ type NodeData = {};
 type ExtractFigNode = Node<NodeData>;
 
 export const ExtractFigNode = ({}: NodeProps<NodeData>) => {
-  const [pastedData] = useAtom(atoms.pastedData);
+  const [clipboardFig] = useAtom(atoms.clipboardFig);
 
   return (
     <div className="flex flex-col bg-white border rounded-lg shadow w-72 nowheel cursor-grab border-slate-300">
@@ -18,29 +18,29 @@ export const ExtractFigNode = ({}: NodeProps<NodeData>) => {
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Fig version</p>
           <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md text-slate-700 bg-slate-100">
-            {pastedData.figVersion > 0 && (
-              <p className="w-full break-words">{pastedData.figVersion}</p>
+            {clipboardFig.figVersion > 0 && (
+              <p className="w-full break-words">{clipboardFig.figVersion}</p>
             )}
           </div>
         </div>
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Schema size (compressed)</p>
           <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md text-slate-700 bg-slate-100">
-            {pastedData.schemaSize > 0 && (
-              <p className="w-full break-words">{pastedData.schemaSize}</p>
+            {clipboardFig.schemaSize > 0 && (
+              <p className="w-full break-words">{clipboardFig.schemaSize}</p>
             )}
           </div>
         </div>
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Data size (compressed)</p>
           <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md text-slate-700 bg-slate-100">
-            {pastedData.dataSize > 0 && (
-              <p className="w-full break-words">{pastedData.dataSize}</p>
+            {clipboardFig.dataSize > 0 && (
+              <p className="w-full break-words">{clipboardFig.dataSize}</p>
             )}
           </div>
         </div>
-        {pastedData.decompressedSchemaSize > 0 &&
-          pastedData.decompressedDataSize > 0 && (
+        {clipboardFig.inflatedSchema.length > 0 &&
+          clipboardFig.inflatedData.length > 0 && (
             <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
               Decompressed successfully
             </div>
@@ -48,9 +48,9 @@ export const ExtractFigNode = ({}: NodeProps<NodeData>) => {
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Schema size (decompressed)</p>
           <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md text-slate-700 bg-slate-100">
-            {pastedData.decompressedSchemaSize > 0 && (
+            {clipboardFig.inflatedSchema.length > 0 && (
               <p className="w-full break-words">
-                {pastedData.decompressedSchemaSize}
+                {clipboardFig.inflatedSchema.length}
               </p>
             )}
           </div>
@@ -58,9 +58,9 @@ export const ExtractFigNode = ({}: NodeProps<NodeData>) => {
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Data size (decompressed)</p>
           <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md text-slate-700 bg-slate-100">
-            {pastedData.decompressedDataSize > 0 && (
+            {clipboardFig.inflatedData.length > 0 && (
               <p className="w-full break-words">
-                {pastedData.decompressedDataSize}
+                {clipboardFig.inflatedData.length}
               </p>
             )}
           </div>
