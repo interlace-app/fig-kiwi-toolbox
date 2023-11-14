@@ -40,7 +40,7 @@ export const ExtractFigNode = ({}: NodeProps<NodeData>) => {
           </div>
         </div>
         {clipboardFig.inflatedSchema.length > 0 &&
-          clipboardFig.decompressedData.length > 0 && (
+          clipboardFig.inflatedData.length > 0 && (
             <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
               Decompressed successfully
             </div>
@@ -58,9 +58,9 @@ export const ExtractFigNode = ({}: NodeProps<NodeData>) => {
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Data size (decompressed)</p>
           <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md text-slate-700 bg-slate-100">
-            {clipboardFig.decompressedData.length > 0 && (
+            {clipboardFig.inflatedData.length > 0 && (
               <p className="w-full break-words">
-                {clipboardFig.decompressedData.length}
+                {clipboardFig.inflatedData.length}
               </p>
             )}
           </div>
