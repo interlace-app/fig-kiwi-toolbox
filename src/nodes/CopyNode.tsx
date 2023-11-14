@@ -9,11 +9,11 @@ type NodeData = {};
 type CopyNode = Node<NodeData>;
 
 export const CopyNode = ({}: NodeProps<NodeData>) => {
-  const [clipboardFig] = useAtom(atoms.clipboardFig);
+  const [pastedData] = useAtom(atoms.pastedData);
 
   const writeClipboardData = async () => {
     const type = 'text/html';
-    const blob = new Blob([clipboardFig.exportedClipboardData], { type });
+    const blob = new Blob([pastedData.fullHtmlExported], { type });
     const cbi = new ClipboardItem({
       [type]: blob,
     });
@@ -42,18 +42,16 @@ export const CopyNode = ({}: NodeProps<NodeData>) => {
             </div>
           </div>
         </button>
-        {clipboardFig.exportedClipboardData && (
-          <>
-            <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
-              Generated{' '}
-              {dayjs(clipboardFig.exportedClipboardData).format('HH:mm:ss')}
-            </div>
-            <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md h-72 text-slate-700 bg-slate-100">
-              <p className="w-full break-words">
-                {clipboardFig.exportedClipboardData}
-              </p>
-            </div>
-          </>
+        {pastedData.fullHtmlExported && (
+          <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
+            Generated{' '}
+            {dayjs(pastedData.fullHtmlLastExported).format('HH:mm:ss')}
+          </div>
+        )}
+        {pastedData.fullHtmlExported && (
+          <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md h-72 text-slate-700 bg-slate-100">
+            <p className="w-full break-words">{pastedData.fullHtmlExported}</p>
+          </div>
         )}
       </div>
       <Handle

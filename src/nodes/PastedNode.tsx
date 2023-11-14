@@ -8,9 +8,9 @@ type NodeData = {};
 type PastedNode = Node<NodeData>;
 
 export const PastedNode = ({}: NodeProps<NodeData>) => {
-  const [clipboardFig] = useAtom(atoms.clipboardFig);
+  const [pastedData] = useAtom(atoms.pastedData);
 
-  const base64MetaBuffer = Buffer.from(clipboardFig.base64Meta, 'base64');
+  const base64MetaBuffer = Buffer.from(pastedData.base64Meta, 'base64');
 
   return (
     <div className="flex flex-col bg-white border rounded-lg shadow w-72 nowheel cursor-grab border-slate-300">
@@ -21,7 +21,7 @@ export const PastedNode = ({}: NodeProps<NodeData>) => {
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Metadata</p>
           <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md h-28 text-slate-700 bg-slate-100">
-            <p className="w-full break-words">{clipboardFig.base64Meta}</p>
+            <p className="w-full break-words">{pastedData.base64Meta}</p>
           </div>
           {base64MetaBuffer.length ? (
             <div className="flex h-32 px-3 py-2 overflow-y-auto text-sm rounded-md text-slate-700 bg-slate-100">
@@ -40,7 +40,7 @@ export const PastedNode = ({}: NodeProps<NodeData>) => {
         <div className="relative flex flex-col gap-1">
           <p className="ml-2 font-semibold">Fig</p>
           <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md h-72 text-slate-700 bg-slate-100">
-            <p className="w-full break-words">{clipboardFig.base64Fig}</p>
+            <p className="w-full break-words">{pastedData.base64Fig}</p>
           </div>
           <Handle
             type="source"
