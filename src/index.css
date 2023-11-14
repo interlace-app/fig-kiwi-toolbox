@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply text-sm;
+  @apply text-slate-800;
+  @apply box-border;
+  font-variant-ligatures: none;
+}
