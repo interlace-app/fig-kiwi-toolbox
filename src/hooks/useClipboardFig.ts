@@ -82,14 +82,14 @@ export const useClipboardFig = () => {
     12 + 4 + schemaSize + 4,
     12 + 4 + schemaSize + 4 + dataSize,
   );
-  const inflatedData = pako.inflateRaw(compressedData);
+  const decompressedData = pako.inflateRaw(compressedData);
 
   // compile schema
   const decodedSchema = decodeBinarySchema(inflatedSchema);
   const compiledSchema = compileSchema(decodedSchema);
 
   // decode data
-  const decodedData = compiledSchema['decodeMessage'](inflatedData);
+  const decodedData = compiledSchema['decodeMessage'](decompressedData);
 
   /**
    * apply modifications
@@ -103,9 +103,9 @@ export const useClipboardFig = () => {
   const toExport = [...uint8FigHeader];
   toExport.push(...struct.pack('<I', schemaSize));
   toExport.push(...compressedSchema);
-  const deflatedModifiedData = pako.deflateRaw(encodedModifiedData);
-  toExport.push(...struct.pack('<I', deflatedModifiedData.length));
-  toExport.push(...deflatedModifiedData);
+  const compressedModifiedData = pako.deflateRaw(encodedModifiedData);
+  toExport.push(...struct.pack('<I', compressedModifiedData.length));
+  toExport.push(...compressedModifiedData);
   const exported = Buffer.from(toExport);
 
   // create base64 fig data
@@ -127,12 +127,12 @@ export const useClipboardFig = () => {
     inflatedSchema,
     dataSize,
     compressedData,
-    inflatedData,
+    decompressedData,
     decodedSchema,
     compiledSchema,
     decodedData,
     encodedModifiedData,
-    deflatedModifiedData,
+    compressedModifiedData,
     exportedData,
     exportedClipboardData,
   };

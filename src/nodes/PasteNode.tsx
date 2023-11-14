@@ -9,7 +9,7 @@ type NodeData = {};
 type PasteNode = Node<NodeData>;
 
 export const PasteNode = ({}: NodeProps<NodeData>) => {
-  const [clipboardFig, setClipboardFig] = useAtom(atoms.clipboardFig);
+  const [clipboardFig] = useAtom(atoms.clipboardFig);
 
   const getAndSaveClipboardData = () => {
     navigator.clipboard
