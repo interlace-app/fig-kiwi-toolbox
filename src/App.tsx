@@ -1,3 +1,5 @@
+import ky from 'ky';
+import { useState } from 'react';
 import ReactFlow, {
   Background,
   Controls,
@@ -25,6 +27,9 @@ const nodeTypes: NodeTypes = {
 };
 
 const App = () => {
+  const [password, setPassword] = useState('');
+  const [validated, setValidated] = useState(false);
+
   const initialNodes = [
     {
       id: '0',
@@ -76,6 +81,36 @@ const App = () => {
 
   const [nodes, _setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, _setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+  if (!validated) {
+    return (
+      <div className="flex items-center justify-center w-screen h-screen gap-2">
+        <input
+          className="px-2 py-1 border rounded-md border-slate-300"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button
+          className="px-2 py-1 transition border rounded-md border-slate-300 hover:bg-slate-100"
+          onClick={() => {
+            ky.post(
+              'https://fig-kiwi-toolbox-passowrd.haoyuzhangca2973.workers.dev/',
+              {
+                json: { password: password },
+              },
+            )
+              .json()
+              .then((value) =>
+                //@ts-expect-error
+                setValidated(value['validated']),
+              );
+          }}
+        >
+          View
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
