@@ -28,7 +28,9 @@ const nodeTypes: NodeTypes = {
 
 const App = () => {
   const [password, setPassword] = useState('');
-  const [validated, setValidated] = useState(false);
+  const [validated, setValidated] = useState(
+    window.location.href.includes('localhost'),
+  );
 
   const initialNodes = [
     {
