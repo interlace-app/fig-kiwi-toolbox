@@ -89,14 +89,6 @@ const clipboardData = atom(
   },
 );
 
-const _rawClipboardData = atom<Buffer>(Buffer.from([]));
-const rawClipboardData = atom(
-  (get) => get(_rawClipboardData),
-  (_, set, value: Buffer) => {
-    set(_rawClipboardData, value);
-  },
-);
-
 const clipboardDataLastUpdated = atom<Date>(new Date());
 
 const pastedData = atom<{
@@ -136,7 +128,6 @@ const pastedData = atom<{
 });
 
 export const atoms = {
-  rawClipboardData,
   clipboardData,
   clipboardDataLastUpdated,
   pastedData,
