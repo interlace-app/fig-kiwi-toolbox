@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
 import { Handle, Node, NodeProps, Position } from 'reactflow';
-import { Data } from '../components';
+import { Data, Status } from '../components';
 import { atoms } from '../contexts';
 
 type NodeData = {};
@@ -30,9 +30,7 @@ export const ExtractFigNode = ({}: NodeProps<NodeData>) => {
         </div>
         {pastedData.decompressedSchemaSize > 0 &&
           pastedData.decompressedDataSize > 0 && (
-            <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
-              Decompressed successfully
-            </div>
+            <Status>Decompressed successfully</Status>
           )}
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Schema size (decompressed)</p>

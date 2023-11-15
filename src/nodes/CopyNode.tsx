@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { useAtom } from 'jotai';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { Handle, Node, NodeProps, Position } from 'reactflow';
-import { Data } from '../components';
+import { Data, Status } from '../components';
 import { atoms } from '../contexts';
 
 type NodeData = {};
@@ -44,10 +44,10 @@ export const CopyNode = ({}: NodeProps<NodeData>) => {
           </div>
         </button>
         {pastedData.fullHtmlExported && (
-          <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
+          <Status>
             Generated{' '}
             {dayjs(pastedData.fullHtmlLastExported).format('HH:mm:ss')}
-          </div>
+          </Status>
         )}
         {pastedData.fullHtmlExported && (
           <Data>{pastedData.fullHtmlExported}</Data>

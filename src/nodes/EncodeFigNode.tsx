@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import _ from 'lodash';
 import { Handle, Node, NodeProps, Position } from 'reactflow';
-import { Data } from '../components';
+import { Data, Status } from '../components';
 import { atoms } from '../contexts';
 
 type NodeData = {};
@@ -24,9 +24,7 @@ export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
           </div>
         </div>
         {pastedData.encodedModifiedData.length > 0 && (
-          <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
-            Encoded data successfully
-          </div>
+          <Status>Encoded data successfully</Status>
         )}
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Data size (decompressed)</p>
@@ -35,9 +33,7 @@ export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
           )}
         </div>
         {pastedData.compressedEncodedDataSize > 0 && (
-          <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
-            Compressed data successfully
-          </div>
+          <Status>Compressed data successfully</Status>
         )}
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Data size (compressed)</p>

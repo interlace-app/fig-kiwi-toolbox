@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import _ from 'lodash';
 import { Handle, Node, NodeProps, Position } from 'reactflow';
-import { Data } from '../components';
+import { Data, Status } from '../components';
 import { atoms } from '../contexts';
 
 type NodeData = {};
@@ -18,9 +18,7 @@ export const DecodeFigNode = ({}: NodeProps<NodeData>) => {
       </div>
       <div className="flex flex-col gap-3 p-3">
         {!_.isEmpty(pastedData.compiledSchema) && (
-          <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
-            Schema compiled successfully
-          </div>
+          <Status>Schema compiled successfully</Status>
         )}
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Kiwi schema</p>
@@ -33,9 +31,7 @@ export const DecodeFigNode = ({}: NodeProps<NodeData>) => {
           )}
         </div>
         {!_.isEmpty(pastedData.decodedData) && (
-          <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
-            Data decoded successfully
-          </div>
+          <Status>Data decoded successfully</Status>
         )}
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Decoded fig</p>
