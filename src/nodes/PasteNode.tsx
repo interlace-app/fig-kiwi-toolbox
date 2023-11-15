@@ -13,13 +13,12 @@ export const PasteNode = ({}: NodeProps<NodeData>) => {
   const [clipboardDataLastUpdated] = useAtom(atoms.clipboardDataLastUpdated);
 
   const getAndSaveClipboardData = () => {
-    navigator.clipboard
-      .read()
-      .then((clipboardItem) =>
-        clipboardItem[0]
-          .getType(clipboardItem[0].types[0])
-          .then((blob) => blob.text().then((text) => setClipboardData(text))),
-      );
+    navigator.clipboard.read().then((clipboardItem) =>
+      clipboardItem[0]
+        .getType('text/html')
+        .then((blob) => blob.text().then((text) => setClipboardData(text)))
+        .catch((e) => console.error(e)),
+    );
   };
 
   useHotkeys(['meta+v', 'ctrl+v'], () => getAndSaveClipboardData());
