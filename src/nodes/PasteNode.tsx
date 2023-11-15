@@ -54,7 +54,7 @@ export const PasteNode = ({}: NodeProps<NodeData>) => {
       <Handle
         type="source"
         position={Position.Right}
-        className="w-3 h-3 bg-slate-400 top-5"
+        className="w-3.5 h-3.5 bg-slate-400 top-5"
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import _ from 'lodash';
 import { Handle, Node, NodeProps, Position } from 'reactflow';
-import { Data, Status } from '../components';
+import { Data, Section, Status } from '../components';
 import { atoms } from '../contexts';
 
 type NodeData = {};
@@ -26,37 +26,36 @@ export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
         {pastedData.encodedModifiedData.length > 0 && (
           <Status>Encoded data successfully</Status>
         )}
-        <div className="flex flex-col gap-1">
-          <p className="ml-2 font-semibold">Data size (decompressed)</p>
-          {pastedData.decompressedEncodedDataSize > 0 && (
-            <Data>{pastedData.decompressedEncodedDataSize}</Data>
-          )}
-        </div>
+        <Section header="Data size (decompressed)">
+          <Data>
+            {pastedData.decompressedEncodedDataSize > 0 &&
+              pastedData.decompressedEncodedDataSize}
+          </Data>
+        </Section>
         {pastedData.compressedEncodedDataSize > 0 && (
           <Status>Compressed data successfully</Status>
         )}
-        <div className="flex flex-col gap-1">
-          <p className="ml-2 font-semibold">Data size (compressed)</p>
-          {pastedData.compressedEncodedDataSize > 0 && (
-            <Data>{pastedData.compressedEncodedDataSize}</Data>
-          )}
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="ml-2 font-semibold">Exported fig</p>
-          {!_.isEmpty(pastedData.base64Exported) && (
-            <Data>{pastedData.base64Exported}</Data>
-          )}
-        </div>
+        <Section header="Data size (compressed)">
+          <Data>
+            {pastedData.compressedEncodedDataSize > 0 &&
+              pastedData.compressedEncodedDataSize}
+          </Data>
+        </Section>
+        <Section header="Exported fig">
+          <Data>
+            {!_.isEmpty(pastedData.base64Exported) && pastedData.base64Exported}
+          </Data>
+        </Section>
       </div>
       <Handle
         type="target"
         position={Position.Left}
-        className="w-3 h-3 bg-slate-400 top-5"
+        className="w-3.5 h-3.5 bg-slate-400 top-5"
       />
       <Handle
         type="source"
         position={Position.Right}
-        className="w-3 h-3 bg-slate-400 top-5"
+        className="w-3.5 h-3.5 bg-slate-400 top-5"
       />
     </div>
   );

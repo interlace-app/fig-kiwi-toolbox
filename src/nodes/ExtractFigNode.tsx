@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
 import { Handle, Node, NodeProps, Position } from 'reactflow';
-import { Data, Status } from '../components';
+import { Data, Section, Status } from '../components';
 import { atoms } from '../contexts';
 
 type NodeData = {};
@@ -16,44 +16,41 @@ export const ExtractFigNode = ({}: NodeProps<NodeData>) => {
         <span className="font-medium text-slate-500">Extract fig data</span>
       </div>
       <div className="flex flex-col gap-3 p-3 ">
-        <div className="flex flex-col gap-1">
-          <p className="ml-2 font-semibold">Fig version</p>
-          {pastedData.figVersion > 0 && <Data>{pastedData.figVersion}</Data>}
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="ml-2 font-semibold">Schema size (compressed)</p>
-          {pastedData.schemaSize > 0 && <Data>{pastedData.schemaSize}</Data>}
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="ml-2 font-semibold">Data size (compressed)</p>
-          {pastedData.dataSize > 0 && <Data>{pastedData.dataSize}</Data>}
-        </div>
+        <Section header="Fig version">
+          <Data>{pastedData.figVersion > 0 && pastedData.figVersion}</Data>
+        </Section>
+        <Section header="Schema size (compressed)">
+          <Data>{pastedData.schemaSize > 0 && pastedData.schemaSize}</Data>
+        </Section>
+        <Section header="Data size (compressed)">
+          <Data>{pastedData.dataSize > 0 && pastedData.dataSize}</Data>
+        </Section>
         {pastedData.decompressedSchemaSize > 0 &&
           pastedData.decompressedDataSize > 0 && (
             <Status>Decompressed successfully</Status>
           )}
-        <div className="flex flex-col gap-1">
-          <p className="ml-2 font-semibold">Schema size (decompressed)</p>
-          {pastedData.decompressedSchemaSize > 0 && (
-            <Data>{pastedData.decompressedSchemaSize}</Data>
-          )}
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="ml-2 font-semibold">Data size (decompressed)</p>
-          {pastedData.decompressedDataSize > 0 && (
-            <Data>{pastedData.decompressedDataSize}</Data>
-          )}
-        </div>
+        <Section header="Schema size (decompressed)">
+          <Data>
+            {pastedData.decompressedSchemaSize > 0 &&
+              pastedData.decompressedSchemaSize}
+          </Data>
+        </Section>
+        <Section header="Data size (decompressed)">
+          <Data>
+            {pastedData.decompressedDataSize > 0 &&
+              pastedData.decompressedDataSize}
+          </Data>
+        </Section>
       </div>
       <Handle
         type="target"
         position={Position.Left}
-        className="w-3 h-3 bg-slate-400 top-5"
+        className="w-3.5 h-3.5 bg-slate-400 top-5"
       />
       <Handle
         type="source"
         position={Position.Right}
-        className="w-3 h-3 bg-slate-400 top-5"
+        className="w-3.5 h-3.5 bg-slate-400 top-5"
       />
     </div>
   );

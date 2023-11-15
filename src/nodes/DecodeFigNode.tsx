@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import _ from 'lodash';
 import { Handle, Node, NodeProps, Position } from 'reactflow';
-import { Data, Status } from '../components';
+import { Data, Section, Status } from '../components';
 import { atoms } from '../contexts';
 
 type NodeData = {};
@@ -20,39 +20,35 @@ export const DecodeFigNode = ({}: NodeProps<NodeData>) => {
         {!_.isEmpty(pastedData.compiledSchema) && (
           <Status>Schema compiled successfully</Status>
         )}
-        <div className="flex flex-col gap-1">
-          <p className="ml-2 font-semibold">Kiwi schema</p>
-          {!_.isEmpty(pastedData.compiledSchema) && (
-            <Data>
-              <pre className="w-full text-sm break-words">
-                {JSON.stringify(pastedData.compiledSchema, null, 2)}
-              </pre>
-            </Data>
-          )}
-        </div>
+        <Section header="Kiwi schema">
+          <Data isPre>
+            <pre className="w-full text-sm break-words">
+              {!_.isEmpty(pastedData.compiledSchema) &&
+                JSON.stringify(pastedData.compiledSchema, null, 2)}
+            </pre>
+          </Data>
+        </Section>
         {!_.isEmpty(pastedData.decodedData) && (
           <Status>Data decoded successfully</Status>
         )}
-        <div className="flex flex-col gap-1">
-          <p className="ml-2 font-semibold">Decoded fig</p>
-          {!_.isEmpty(pastedData.decodedData) && (
-            <Data>
-              <pre className="w-full text-sm break-words">
-                {JSON.stringify(pastedData.decodedData, null, 2)}
-              </pre>
-            </Data>
-          )}
-        </div>
+        <Section header="Decoded fig">
+          <Data isPre>
+            <pre className="w-full text-sm break-words">
+              {!_.isEmpty(pastedData.decodedData) &&
+                JSON.stringify(pastedData.decodedData, null, 2)}
+            </pre>
+          </Data>
+        </Section>
       </div>
       <Handle
         type="target"
         position={Position.Left}
-        className="w-3 h-3 bg-slate-400 top-5"
+        className="w-3.5 h-3.5 bg-slate-400 top-5"
       />
       <Handle
         type="source"
         position={Position.Right}
-        className="w-3 h-3 bg-slate-400 top-5"
+        className="w-3.5 h-3.5 bg-slate-400 top-5"
       />
     </div>
   );
