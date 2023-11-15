@@ -1,6 +1,7 @@
 import { Buffer } from 'buffer/';
 import { useAtom } from 'jotai';
 import { Handle, Node, NodeProps, Position } from 'reactflow';
+import { Data } from '../components';
 import { atoms } from '../contexts';
 
 type NodeData = {};
@@ -20,11 +21,9 @@ export const PastedNode = ({}: NodeProps<NodeData>) => {
       <div className="flex flex-col gap-3 p-3 ">
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Metadata</p>
-          <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md h-28 text-slate-700 bg-slate-100">
-            <p className="w-full break-words">{pastedData.base64Meta}</p>
-          </div>
+          <Data>{pastedData.base64Meta}</Data>
           {base64MetaBuffer.length ? (
-            <div className="flex h-32 px-3 py-2 overflow-y-auto text-sm rounded-md text-slate-700 bg-slate-100">
+            <Data>
               <pre className="w-full text-sm break-words ">
                 {JSON.stringify(
                   JSON.parse(base64MetaBuffer.toString()),
@@ -32,16 +31,14 @@ export const PastedNode = ({}: NodeProps<NodeData>) => {
                   2,
                 )}
               </pre>
-            </div>
+            </Data>
           ) : (
             <></>
           )}
         </div>
         <div className="relative flex flex-col gap-1">
           <p className="ml-2 font-semibold">Fig</p>
-          <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md h-72 text-slate-700 bg-slate-100">
-            <p className="w-full break-words">{pastedData.base64Fig}</p>
-          </div>
+          <Data>{pastedData.base64Fig}</Data>
           <Handle
             type="source"
             position={Position.Right}

@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai';
 import _ from 'lodash';
 import { Handle, Node, NodeProps, Position } from 'reactflow';
+import { Data } from '../components';
 import { atoms } from '../contexts';
 
 type NodeData = {};
@@ -23,13 +24,13 @@ export const DecodeFigNode = ({}: NodeProps<NodeData>) => {
         )}
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Kiwi schema</p>
-          <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md h-80 text-slate-700 bg-slate-100">
-            {!_.isEmpty(pastedData.compiledSchema) && (
+          {!_.isEmpty(pastedData.compiledSchema) && (
+            <Data>
               <pre className="w-full text-sm break-words">
                 {JSON.stringify(pastedData.compiledSchema, null, 2)}
               </pre>
-            )}
-          </div>
+            </Data>
+          )}
         </div>
         {!_.isEmpty(pastedData.decodedData) && (
           <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
@@ -38,13 +39,13 @@ export const DecodeFigNode = ({}: NodeProps<NodeData>) => {
         )}
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Decoded fig</p>
-          <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md h-80 text-slate-700 bg-slate-100">
-            {!_.isEmpty(pastedData.decodedData) && (
+          {!_.isEmpty(pastedData.decodedData) && (
+            <Data>
               <pre className="w-full text-sm break-words">
                 {JSON.stringify(pastedData.decodedData, null, 2)}
               </pre>
-            )}
-          </div>
+            </Data>
+          )}
         </div>
       </div>
       <Handle

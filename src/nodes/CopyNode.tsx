@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { useAtom } from 'jotai';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { Handle, Node, NodeProps, Position } from 'reactflow';
+import { Data } from '../components';
 import { atoms } from '../contexts';
 
 type NodeData = {};
@@ -49,9 +50,7 @@ export const CopyNode = ({}: NodeProps<NodeData>) => {
           </div>
         )}
         {pastedData.fullHtmlExported && (
-          <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md h-72 text-slate-700 bg-slate-100">
-            <p className="w-full break-words">{pastedData.fullHtmlExported}</p>
-          </div>
+          <Data>{pastedData.fullHtmlExported}</Data>
         )}
       </div>
       <Handle

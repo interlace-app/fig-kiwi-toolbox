@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai';
 import _ from 'lodash';
 import { Handle, Node, NodeProps, Position } from 'reactflow';
+import { Data } from '../components';
 import { atoms } from '../contexts';
 
 type NodeData = {};
@@ -18,8 +19,8 @@ export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
       <div className="flex flex-col gap-3 p-3">
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Kiwi schema</p>
-          <div className="flex justify-center px-3 py-2 text-sm rounded-md text-slate-700 bg-slate-100">
-            Reusing the extracted schema
+          <div className="flex justify-center px-3 py-2 text-sm rounded-md text-slate-400 bg-slate-100">
+            Reusing the extracted schema...
           </div>
         </div>
         {pastedData.encodedModifiedData.length > 0 && (
@@ -29,13 +30,9 @@ export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
         )}
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Data size (decompressed)</p>
-          <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md text-slate-700 bg-slate-100">
-            {pastedData.decompressedEncodedDataSize > 0 && (
-              <p className="w-full break-words">
-                {pastedData.decompressedEncodedDataSize}
-              </p>
-            )}
-          </div>
+          {pastedData.decompressedEncodedDataSize > 0 && (
+            <Data>{pastedData.decompressedEncodedDataSize}</Data>
+          )}
         </div>
         {pastedData.compressedEncodedDataSize > 0 && (
           <div className="flex justify-center px-3 py-2 text-sm text-green-700 bg-green-100 rounded-md">
@@ -44,23 +41,15 @@ export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
         )}
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Data size (compressed)</p>
-          <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md text-slate-700 bg-slate-100">
-            {pastedData.compressedEncodedDataSize > 0 && (
-              <p className="w-full break-words">
-                {pastedData.compressedEncodedDataSize}
-              </p>
-            )}
-          </div>
+          {pastedData.compressedEncodedDataSize > 0 && (
+            <Data>{pastedData.compressedEncodedDataSize}</Data>
+          )}
         </div>
         <div className="flex flex-col gap-1">
           <p className="ml-2 font-semibold">Exported fig</p>
-          <div className="flex px-3 py-2 overflow-y-auto text-sm rounded-md h-80 text-slate-700 bg-slate-100">
-            {!_.isEmpty(pastedData.base64Exported) && (
-              <p className="w-full text-sm break-words">
-                {pastedData.base64Exported}
-              </p>
-            )}
-          </div>
+          {!_.isEmpty(pastedData.base64Exported) && (
+            <Data>{pastedData.base64Exported}</Data>
+          )}
         </div>
       </div>
       <Handle
