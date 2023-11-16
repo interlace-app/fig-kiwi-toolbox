@@ -9,7 +9,7 @@ type NodeData = {};
 type EncodeFigNode = Node<NodeData>;
 
 export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
-  const [pastedData] = useAtom(atoms.pastedData);
+  const [clipboardFig] = useAtom(atoms.clipboardFig);
 
   return (
     <div className="flex flex-col bg-white border rounded-lg shadow w-72 nowheel cursor-grab border-slate-300">
@@ -23,27 +23,27 @@ export const EncodeFigNode = ({}: NodeProps<NodeData>) => {
             Reusing the extracted schema...
           </div>
         </div>
-        {pastedData.encodedModifiedData.length > 0 && (
+        {clipboardFig.encodedModifiedData.length > 0 && (
           <Status>Encoded data successfully</Status>
         )}
         <Section header="Data size (decompressed)">
           <Data>
-            {pastedData.decompressedEncodedDataSize > 0 &&
-              pastedData.decompressedEncodedDataSize}
+            {clipboardFig.encodedModifiedData.length > 0 &&
+              clipboardFig.encodedModifiedData.length}
           </Data>
         </Section>
-        {pastedData.compressedEncodedDataSize > 0 && (
+        {clipboardFig.compressedModifiedData.length > 0 && (
           <Status>Compressed data successfully</Status>
         )}
         <Section header="Data size (compressed)">
           <Data>
-            {pastedData.compressedEncodedDataSize > 0 &&
-              pastedData.compressedEncodedDataSize}
+            {clipboardFig.compressedModifiedData.length > 0 &&
+              clipboardFig.compressedModifiedData.length}
           </Data>
         </Section>
         <Section header="Exported fig">
           <Data>
-            {!_.isEmpty(pastedData.base64Exported) && pastedData.base64Exported}
+            {!_.isEmpty(clipboardFig.exportedData) && clipboardFig.exportedData}
           </Data>
         </Section>
       </div>

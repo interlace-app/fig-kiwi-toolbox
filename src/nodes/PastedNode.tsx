@@ -9,9 +9,9 @@ type NodeData = {};
 type PastedNode = Node<NodeData>;
 
 export const PastedNode = ({}: NodeProps<NodeData>) => {
-  const [pastedData] = useAtom(atoms.pastedData);
+  const [clipboardFig] = useAtom(atoms.clipboardFig);
 
-  const base64MetaBuffer = Buffer.from(pastedData.base64Meta, 'base64');
+  const base64MetaBuffer = Buffer.from(clipboardFig.base64Meta, 'base64');
 
   return (
     <div className="flex flex-col bg-white border rounded-lg shadow w-72 nowheel cursor-grab border-slate-300">
@@ -20,7 +20,7 @@ export const PastedNode = ({}: NodeProps<NodeData>) => {
       </div>
       <div className="flex flex-col gap-3 p-3 ">
         <Section header="Metadata">
-          <Data>{pastedData.base64Meta}</Data>
+          <Data>{clipboardFig.base64Meta}</Data>
           <Data isPre>
             {base64MetaBuffer.length > 0 && (
               <pre className="w-full text-sm break-words ">
@@ -34,7 +34,7 @@ export const PastedNode = ({}: NodeProps<NodeData>) => {
           </Data>
         </Section>
         <Section header="Fig" className="relative">
-          <Data>{pastedData.base64Fig}</Data>
+          <Data>{clipboardFig.base64Fig}</Data>
           <Handle
             type="source"
             position={Position.Right}

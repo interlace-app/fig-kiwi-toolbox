@@ -9,7 +9,7 @@ type NodeData = {};
 type DecodeFigNode = Node<NodeData>;
 
 export const DecodeFigNode = ({}: NodeProps<NodeData>) => {
-  const [pastedData] = useAtom(atoms.pastedData);
+  const [clipboardFig] = useAtom(atoms.clipboardFig);
 
   return (
     <div className="flex flex-col bg-white border rounded-lg shadow w-72 nowheel cursor-grab border-slate-300">
@@ -17,25 +17,25 @@ export const DecodeFigNode = ({}: NodeProps<NodeData>) => {
         <span className="font-medium text-slate-500">Decode fig data</span>
       </div>
       <div className="flex flex-col gap-3 p-3">
-        {!_.isEmpty(pastedData.compiledSchema) && (
+        {!_.isEmpty(clipboardFig.compiledSchema) && (
           <Status>Schema compiled successfully</Status>
         )}
         <Section header="Kiwi schema">
           <Data isPre>
             <pre className="w-full text-sm break-words">
-              {!_.isEmpty(pastedData.compiledSchema) &&
-                JSON.stringify(pastedData.compiledSchema, null, 2)}
+              {!_.isEmpty(clipboardFig.compiledSchema) &&
+                JSON.stringify(clipboardFig.compiledSchema, null, 2)}
             </pre>
           </Data>
         </Section>
-        {!_.isEmpty(pastedData.decodedData) && (
+        {!_.isEmpty(clipboardFig.decodedData) && (
           <Status>Data decoded successfully</Status>
         )}
         <Section header="Decoded fig">
           <Data isPre>
             <pre className="w-full text-sm break-words">
-              {!_.isEmpty(pastedData.decodedData) &&
-                JSON.stringify(pastedData.decodedData, null, 2)}
+              {!_.isEmpty(clipboardFig.decodedData) &&
+                JSON.stringify(clipboardFig.decodedData, null, 2)}
             </pre>
           </Data>
         </Section>

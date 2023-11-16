@@ -8,7 +8,7 @@ type NodeData = {};
 type ExtractFigNode = Node<NodeData>;
 
 export const ExtractFigNode = ({}: NodeProps<NodeData>) => {
-  const [pastedData] = useAtom(atoms.pastedData);
+  const [clipboardFig] = useAtom(atoms.clipboardFig);
 
   return (
     <div className="flex flex-col bg-white border rounded-lg shadow w-72 nowheel cursor-grab border-slate-300">
@@ -17,28 +17,28 @@ export const ExtractFigNode = ({}: NodeProps<NodeData>) => {
       </div>
       <div className="flex flex-col gap-3 p-3 ">
         <Section header="Fig version">
-          <Data>{pastedData.figVersion > 0 && pastedData.figVersion}</Data>
+          <Data>{clipboardFig.figVersion > 0 && clipboardFig.figVersion}</Data>
         </Section>
         <Section header="Schema size (compressed)">
-          <Data>{pastedData.schemaSize > 0 && pastedData.schemaSize}</Data>
+          <Data>{clipboardFig.schemaSize > 0 && clipboardFig.schemaSize}</Data>
         </Section>
         <Section header="Data size (compressed)">
-          <Data>{pastedData.dataSize > 0 && pastedData.dataSize}</Data>
+          <Data>{clipboardFig.dataSize > 0 && clipboardFig.dataSize}</Data>
         </Section>
-        {pastedData.decompressedSchemaSize > 0 &&
-          pastedData.decompressedDataSize > 0 && (
+        {clipboardFig.decompressedSchema.length > 0 &&
+          clipboardFig.decompressedData.length > 0 && (
             <Status>Decompressed successfully</Status>
           )}
         <Section header="Schema size (decompressed)">
           <Data>
-            {pastedData.decompressedSchemaSize > 0 &&
-              pastedData.decompressedSchemaSize}
+            {clipboardFig.decompressedSchema.length > 0 &&
+              clipboardFig.decompressedSchema.length}
           </Data>
         </Section>
         <Section header="Data size (decompressed)">
           <Data>
-            {pastedData.decompressedDataSize > 0 &&
-              pastedData.decompressedDataSize}
+            {clipboardFig.decompressedData.length > 0 &&
+              clipboardFig.decompressedData.length}
           </Data>
         </Section>
       </div>
