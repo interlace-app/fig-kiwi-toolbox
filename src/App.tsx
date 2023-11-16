@@ -88,7 +88,6 @@ const App = () => {
 
   const [nodes, _setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, _setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [count, setCount] = useState(0);
 
   if (!validated) {
     return (
@@ -127,8 +126,6 @@ const App = () => {
           <div className="px-4 py-3 border-b border-slate-300">
             <span className="text-xl font-medium">Edit data</span>
           </div>
-          <p>{count}</p>
-          <button onClick={() => setCount(count + 1)}>test</button>
           <div className="flex flex-col gap-2 px-4 pt-4 overflow-y-auto">
             <p className="font-semibold text-md">Node changes</p>
             {modifiedFigData.nodeChanges?.map((nodeChange, i) => (
