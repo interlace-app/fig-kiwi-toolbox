@@ -56,13 +56,11 @@ export const NodeChange = ({
       )}
       {...props}
     >
-      {nodeChange.type === 'ROUNDED_RECTANGLE' && nodeChange.fillPaints && (
-        <p>{nodeChange.fillPaints[0]?.color.r}</p>
-      )}
       {nodeChange.type && renderProp('Type', nodeChange.type)}
       {nodeChange.name && renderProp('Name', nodeChange.name)}
       {nodeChange.type === 'ROUNDED_RECTANGLE' &&
         nodeChange.fillPaints &&
+        //@ts-expect-error
         renderColor('Fill', nodeChange.fillPaints[0]?.color)}
     </div>
   );
