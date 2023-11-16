@@ -2,6 +2,7 @@ import { Buffer } from 'buffer/';
 import { compileSchema, decodeBinarySchema } from 'kiwi-schema';
 import pako from 'pako';
 import struct from 'python-struct';
+import { Message, Schema } from '../kiwi/schema';
 
 /**
  * a handy hook to process clipboard data automatically
@@ -23,8 +24,8 @@ export const analyzeClipboardData = (clipboardData: string) => {
     compressedData: new Uint8Array([]),
     decompressedData: new Uint8Array([]),
     decodedSchema: {} as any,
-    compiledSchema: {} as any,
-    decodedData: {} as any,
+    compiledSchema: {} as Schema,
+    decodedData: {} as Message,
     encodedModifiedData: new Uint8Array([]),
     compressedModifiedData: new Uint8Array([]),
     exportedData: '',
@@ -104,7 +105,10 @@ export const analyzeClipboardData = (clipboardData: string) => {
   analyzed.compiledSchema = compileSchema(analyzed.decodedSchema);
 
   // decode data
-  analyzed.decodedData = analyzed.compiledSchema['decodeMessage'](
+  // analyzed.decodedData = analyzed.compiledSchema['decodeMessage'](
+  //   analyzed.decompressedData,
+  // );
+  analyzed.decodedData = analyzed.compiledSchema.decodeMessage(
     analyzed.decompressedData,
   );
 
@@ -113,7 +117,7 @@ export const analyzeClipboardData = (clipboardData: string) => {
    * //STUB - just a random change for now
    */
   let modifiedData = analyzed.decodedData;
-  modifiedData['pastedId'] = 1234567890;
+  modifiedData.pasteID = 1234567890;
   analyzed.encodedModifiedData =
     analyzed.compiledSchema['encodeMessage'](modifiedData);
 
