@@ -16,6 +16,7 @@ export const analyzeClipboardData = (clipboardData: string) => {
     base64Meta: '',
     base64Fig: '',
     figBuffer: Buffer.from([]),
+    uint8FigHeader: new Uint8Array([]),
     figVersion: -1,
     schemaSize: -1,
     compressedSchema: new Uint8Array([]),
@@ -24,12 +25,10 @@ export const analyzeClipboardData = (clipboardData: string) => {
     compressedData: new Uint8Array([]),
     decompressedData: new Uint8Array([]),
     decodedSchema: {} as any,
+    //STUB - type with pre-extracted schema
     compiledSchema: {} as Schema,
+    //STUB - type with pre-extracted schema
     decodedData: {} as Message,
-    encodedModifiedData: new Uint8Array([]),
-    compressedModifiedData: new Uint8Array([]),
-    exportedData: '',
-    exportedClipboardData: '',
   };
 
   if (!clipboardData) {
@@ -60,13 +59,13 @@ export const analyzeClipboardData = (clipboardData: string) => {
   analyzed.figBuffer = Buffer.from(analyzed.base64Fig, 'base64');
 
   // read fig header
-  const uint8FigHeader = analyzed.figBuffer.subarray(0, 12);
+  analyzed.uint8FigHeader = analyzed.figBuffer.subarray(0, 12);
 
   // read fig version
   analyzed.figVersion = struct.unpack(
     '<I',
     //@ts-expect-error can take unit8array
-    uint8FigHeader.slice(8, 12),
+    analyzed.uint8FigHeader.slice(8, 12),
   )[0] as number;
 
   // read schema size
@@ -105,38 +104,13 @@ export const analyzeClipboardData = (clipboardData: string) => {
   analyzed.compiledSchema = compileSchema(analyzed.decodedSchema);
 
   // decode data
+  //STUB - type with pre-extracted schema
   // analyzed.decodedData = analyzed.compiledSchema['decodeMessage'](
   //   analyzed.decompressedData,
   // );
   analyzed.decodedData = analyzed.compiledSchema.decodeMessage(
     analyzed.decompressedData,
   );
-
-  /**
-   * apply modifications
-   * //STUB - just a random change for now
-   */
-  let modifiedData = analyzed.decodedData;
-  modifiedData.pasteID = 1234567890;
-  analyzed.encodedModifiedData =
-    analyzed.compiledSchema['encodeMessage'](modifiedData);
-
-  // write binary fig data
-  const toExport = [...uint8FigHeader];
-  toExport.push(...struct.pack('<I', analyzed.schemaSize));
-  toExport.push(...analyzed.compressedSchema);
-  analyzed.compressedModifiedData = pako.deflateRaw(
-    analyzed.encodedModifiedData,
-  );
-  toExport.push(...struct.pack('<I', analyzed.compressedModifiedData.length));
-  toExport.push(...analyzed.compressedModifiedData);
-  const exported = Buffer.from(toExport);
-
-  // create base64 fig data
-  analyzed.exportedData = exported.toString('base64');
-
-  // generate the clipboard data
-  analyzed.exportedClipboardData = `<meta charset='utf-8'><meta charset="utf-8"><span data-metadata="<!--(figmeta)${analyzed.base64Meta}(/figmeta)-->"></span><span data-buffer="<!--(figma)${analyzed.exportedData}(/figma)-->"></span><span style="white-space:pre-wrap;"></span>`;
 
   return analyzed;
 };

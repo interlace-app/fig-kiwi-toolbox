@@ -2,8 +2,10 @@ import dayjs from 'dayjs';
 import { useAtom } from 'jotai';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { Handle, Node, NodeProps, Position } from 'reactflow';
+import { useEffectOnce } from 'usehooks-ts';
 import { Data, Status } from '../components';
 import { atoms } from '../contexts';
+import { sampleClipboardData } from '../utils';
 
 type NodeData = {};
 
@@ -23,6 +25,8 @@ export const PasteNode = ({}: NodeProps<NodeData>) => {
   };
 
   useHotkeys(['meta+v', 'ctrl+v'], () => getAndSaveClipboardData());
+
+  useEffectOnce(() => setClipboardData(sampleClipboardData));
 
   return (
     <div className="flex flex-col bg-white border rounded-lg shadow nowheel w-72 cursor-grab border-slate-300">

@@ -9,11 +9,12 @@ type NodeData = {};
 type CopyNode = Node<NodeData>;
 
 export const CopyNode = ({}: NodeProps<NodeData>) => {
-  const [clipboardFig] = useAtom(atoms.clipboardFig);
+  const [exportedFig] = useAtom(atoms.exportedFig);
+  const [exportedFigLastUpdated] = useAtom(atoms.exportedFigLastUpdated);
 
   const writeClipboardData = async () => {
     const type = 'text/html';
-    const blob = new Blob([clipboardFig.exportedClipboardData], { type });
+    const blob = new Blob([exportedFig.exportedClipboardData], { type });
     const cbi = new ClipboardItem({
       [type]: blob,
     });
@@ -32,13 +33,12 @@ export const CopyNode = ({}: NodeProps<NodeData>) => {
         >
           Copy
         </button>
-        {clipboardFig.exportedClipboardData && (
+        {exportedFig.exportedClipboardData && (
           <>
             <Status>
-              Generated{' '}
-              {dayjs(clipboardFig.exportedClipboardData).format('HH:mm:ss')}
+              Generated {dayjs(exportedFigLastUpdated).format('HH:mm:ss')}
             </Status>
-            <Data>{clipboardFig.exportedClipboardData}</Data>
+            <Data>{exportedFig.exportedClipboardData}</Data>
           </>
         )}
       </div>

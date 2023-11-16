@@ -1,4 +1,6 @@
+import { useAtom } from 'jotai';
 import ky from 'ky';
+import _ from 'lodash';
 import { useState } from 'react';
 import ReactFlow, {
   Background,
@@ -8,6 +10,8 @@ import ReactFlow, {
   useNodesState,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
+import { NodeChange } from './components';
+import { atoms } from './contexts';
 import {
   CopyNode,
   DecodeFigNode,
@@ -31,6 +35,7 @@ const App = () => {
   const [validated, setValidated] = useState(
     window.location.href.includes('localhost'),
   );
+  const [modifiedFigData, setModifiedFigData] = useAtom(atoms.modifiedFigData);
 
   const initialNodes = [
     {
@@ -67,8 +72,8 @@ const App = () => {
       id: '5',
       type: 'CopyNode',
       position: {
-        x: 250 + 40 + 250 + 40 + 250 + 40 + 250 + 40 + 250 + 40,
-        y: 0,
+        x: 0,
+        y: 440,
       },
       data: {},
     },
@@ -83,6 +88,7 @@ const App = () => {
 
   const [nodes, _setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, _setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [count, setCount] = useState(0);
 
   if (!validated) {
     return (
@@ -116,6 +122,30 @@ const App = () => {
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
+      {!_.isEmpty(modifiedFigData) && (
+        <div className="absolute z-50 w-3/12 max-w-lg bg-white border shadow-xl rounded-xl inset-y-3 right-3 border-slate-200">
+          <div className="px-4 py-3 border-b border-slate-300">
+            <span className="text-xl font-medium">Edit data</span>
+          </div>
+          <p>{count}</p>
+          <button onClick={() => setCount(count + 1)}>test</button>
+          <div className="flex flex-col gap-2 px-4 pt-4 overflow-y-auto">
+            <p className="font-semibold text-md">Node changes</p>
+            {modifiedFigData.nodeChanges?.map((nodeChange, i) => (
+              <NodeChange
+                nodeChange={nodeChange}
+                key={i}
+                onChangeTest={(c) => {
+                  const newData = modifiedFigData;
+                  //@ts-expect-error
+                  newData.nodeChanges[i].fillPaints[0].color = c;
+                  setModifiedFigData(modifiedFigData);
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -123,7 +153,8 @@ const App = () => {
         onEdgesChange={onEdgesChange}
         className="bg-slate-100"
         nodeTypes={nodeTypes}
-        defaultViewport={{ x: 40, y: 40, zoom: 1 }}
+        defaultViewport={{ x: 60, y: 40, zoom: 1 }}
+        proOptions={{ hideAttribution: true }}
       >
         <Controls className="bg-white" />
         <Background gap={20} size={2} className="opacity-50" />
