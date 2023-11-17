@@ -119,8 +119,6 @@ const App = () => {
     );
   }
 
-  console.log(modifiedFigData.nodeChanges);
-
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       {!_.isEmpty(modifiedFigData) && (
