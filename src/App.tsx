@@ -119,6 +119,8 @@ const App = () => {
     );
   }
 
+  console.log(modifiedFigData.nodeChanges);
+
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       {!_.isEmpty(modifiedFigData) && (
@@ -126,7 +128,7 @@ const App = () => {
           <div className="px-4 py-3 border-b border-slate-300">
             <span className="text-xl font-medium">Edit data</span>
           </div>
-          <div className="flex flex-col gap-2 px-4 py-4 overflow-y-auto">
+          <div className="flex flex-col flex-1 gap-2 px-4 py-4 overflow-y-auto">
             <p className="font-semibold text-md">Node changes</p>
             {modifiedFigData.nodeChanges?.map((nodeChange, i) => (
               <NodeChange

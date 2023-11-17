@@ -11,6 +11,7 @@
     "kiwic": "node_modules/kiwi-schema/cli.js"
   },
   "dependencies": {
+    "@ariakit/react": "^0.3.5",
     "@types/pako": "^2.0.3",
     "@uiw/color-convert": "^2.0.2",
     "@uiw/react-color": "^2.0.2",
@@ -21,6 +22,7 @@
     "kiwi-schema": "^0.5.0",
     "ky": "^1.1.3",
     "lodash": "^4.17.21",
+    "lucide-react": "^0.292.0",
     "pako": "^2.1.0",
     "python-struct": "^1.1.3",
     "react": "^18.2.0",

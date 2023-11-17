@@ -1,6 +1,5 @@
-import { rgbaToHsva } from '@uiw/color-convert';
-import { Sketch } from '@uiw/react-color';
 import { twMerge } from 'tailwind-merge';
+import { Prop } from '.';
 import { Color, NodeChange as INodeChange } from '../../kiwi/schema';
 
 export interface NodeChangeProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -14,40 +13,6 @@ export const NodeChange = ({
   onChangeTest,
   ...props
 }: NodeChangeProps) => {
-  const renderProp = (name: string, value?: string | number) => (
-    <div className="flex items-center justify-between">
-      <p>{name}</p>
-      <p className="px-3 py-1 rounded-md text-slate-700 bg-slate-100">
-        {value}
-      </p>
-    </div>
-  );
-
-  //STUB - just temporary
-  const renderColor = (name: string, c: Color) => {
-    return (
-      <div className="flex items-center justify-between">
-        <p>{name}</p>
-        <Sketch
-          color={rgbaToHsva({
-            r: c.r * 255,
-            g: c.g * 255,
-            b: c.b * 255,
-            a: c.a,
-          })}
-          onChange={(c) => {
-            onChangeTest({
-              r: c.rgba.r / 255,
-              g: c.rgba.g / 255,
-              b: c.rgba.b / 255,
-              a: c.rgba.a,
-            });
-          }}
-        />
-      </div>
-    );
-  };
-
   return (
     <div
       className={twMerge(
@@ -56,12 +21,24 @@ export const NodeChange = ({
       )}
       {...props}
     >
-      {nodeChange.type && renderProp('Type', nodeChange.type)}
-      {nodeChange.name && renderProp('Name', nodeChange.name)}
-      {nodeChange.type === 'ROUNDED_RECTANGLE' &&
-        nodeChange.fillPaints &&
-        //@ts-expect-error
-        renderColor('Fill', nodeChange.fillPaints[0]?.color)}
+      {nodeChange.type && (
+        <Prop.Root name="Type">
+          <Prop.String value={nodeChange.type} />
+        </Prop.Root>
+      )}
+      {nodeChange.type && (
+        <Prop.Root name="Name">
+          <Prop.String value={nodeChange.name} />
+        </Prop.Root>
+      )}
+      {nodeChange.type === 'ROUNDED_RECTANGLE' && nodeChange.fillPaints && (
+        <Prop.Root name="Fill">
+          <Prop.Color
+            value={nodeChange.fillPaints[0]?.color}
+            onValueChange={onChangeTest}
+          />
+        </Prop.Root>
+      )}
     </div>
   );
 };
