@@ -8,11 +8,11 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "kiwic": "node_modules/kiwi-schema/cli.js"
+    "kiwic": "node_modules/kiwi-schema/cli.js",
+    "ncu": "ncu"
   },
   "dependencies": {
-    "@ariakit/react": "^0.3.5",
-    "@types/pako": "^2.0.3",
+    "@radix-ui/react-popover": "^1.0.7",
     "@uiw/color-convert": "^2.0.2",
     "@uiw/react-color": "^2.0.2",
     "buffer": "^6.0.3",
@@ -29,7 +29,6 @@
     "react-dom": "^18.2.0",
     "react-hotkeys-hook": "^4.4.1",
     "reactflow": "^11.10.1",
-    "tailwind-children": "^0.5.0",
     "tailwind-merge": "^2.0.0",
     "usehooks-ts": "^2.9.1",
     "uuid-int": "^3.1.0"
@@ -37,6 +36,7 @@
   "devDependencies": {
     "@types/color": "^3.0.6",
     "@types/lodash": "^4.14.201",
+    "@types/pako": "^2.0.3",
     "@types/python-struct": "^1.0.4",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
@@ -47,6 +47,7 @@
     "eslint": "^8.53.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
+    "npm-check-updates": "^16.14.6",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.2.2",
