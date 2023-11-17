@@ -26,7 +26,7 @@ export const NodeChange = ({
           <Prop.String value={nodeChange.type} />
         </Prop.Root>
       )}
-      {nodeChange.type && (
+      {nodeChange.name && (
         <Prop.Root name="Name">
           <Prop.String value={nodeChange.name} />
         </Prop.Root>
