@@ -24,11 +24,7 @@ export const PastedNode = ({}: NodeProps<NodeData>) => {
           <Data isPre>
             {base64MetaBuffer.length > 0 && (
               <pre className="w-full text-sm break-words ">
-                {JSON.stringify(
-                  JSON.parse(base64MetaBuffer.toString()),
-                  null,
-                  2,
-                )}
+                {JSON.stringify(clipboardFig.decodedMeta, null, 2)}
               </pre>
             )}
           </Data>

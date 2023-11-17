@@ -30,7 +30,7 @@ const modifiedFigData = atom(
         get(_clipboardFig).uint8FigHeader,
         get(_clipboardFig).schemaSize,
         get(_clipboardFig).compressedSchema,
-        get(_clipboardFig).base64Meta,
+        get(_clipboardFig).decodedMeta,
         get(_clipboardFig).compiledSchema,
         get(_clipboardFig).decodedData,
       ),

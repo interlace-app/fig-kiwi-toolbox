@@ -31,7 +31,7 @@ export const NodeChange = ({
           <Prop.String value={nodeChange.name} />
         </Prop.Root>
       )}
-      {nodeChange.type === 'ROUNDED_RECTANGLE' && nodeChange.fillPaints && (
+      {nodeChange.fillPaints && nodeChange.fillPaints?.length > 0 && (
         <Prop.Root name="Fill">
           <Prop.Color
             value={nodeChange.fillPaints[0]?.color}

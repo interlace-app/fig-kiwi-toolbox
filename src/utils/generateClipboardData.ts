@@ -12,7 +12,7 @@ export const generateClipboardData = (
   uint8FigHeader: Uint8Array,
   schemaSize: number,
   compressedSchema: Uint8Array,
-  base64Meta: string,
+  decodedMeta: any,
   schema: Schema,
   data: Message,
 ) => {
@@ -31,12 +31,8 @@ export const generateClipboardData = (
     return generated;
   }
 
-  const gen = () => Math.floor(Math.random() * (255 - 0 + 1)) + 0;
-  data.pasteID = gen();
-  data.pastePageId = {
-    sessionID: gen(),
-    localID: gen(),
-  };
+  // to tell figma it's new data
+  decodedMeta.pasteID = 0;
 
   //STUB - type with pre-extracted schema
   generated.encodedModifiedData = schema.encodeMessage(data);
@@ -56,7 +52,11 @@ export const generateClipboardData = (
   generated.exportedData = exported.toString('base64');
 
   // generate the clipboard data
-  generated.exportedClipboardData = `<meta charset='utf-8'><meta charset="utf-8"><span data-metadata="<!--(figmeta)${base64Meta}(/figmeta)-->"></span><span data-buffer="<!--(figma)${generated.exportedData}(/figma)-->"></span><span style="white-space:pre-wrap;"></span>`;
+  generated.exportedClipboardData = `<meta charset='utf-8'><meta charset="utf-8"><span data-metadata="<!--(figmeta)${Buffer.from(
+    JSON.stringify(decodedMeta),
+  ).toString('base64')}(/figmeta)-->"></span><span data-buffer="<!--(figma)${
+    generated.exportedData
+  }(/figma)-->"></span><span style="white-space:pre-wrap;"></span>`;
 
   return generated;
 };

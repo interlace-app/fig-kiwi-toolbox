@@ -14,6 +14,7 @@ export const analyzeClipboardData = (clipboardData: string) => {
    */
   const analyzed = {
     base64Meta: '',
+    decodedMeta: {} as any,
     base64Fig: '',
     figBuffer: Buffer.from([]),
     uint8FigHeader: new Uint8Array([]),
@@ -41,6 +42,9 @@ export const analyzeClipboardData = (clipboardData: string) => {
   if (base64MetaMatches?.length === 2) {
     analyzed.base64Meta = base64MetaMatches[1];
   }
+  analyzed.decodedMeta = JSON.parse(
+    Buffer.from(analyzed.base64Meta, 'base64').toString(),
+  );
 
   // match figma
   const base64FigRegex = /<!--\(figma\)(.+)\(\/figma\)-->/;
