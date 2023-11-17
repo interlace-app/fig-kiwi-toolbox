@@ -1,4 +1,4 @@
-import * as Ariakit from '@ariakit/react';
+import * as Popover from '@radix-ui/react-popover';
 import { rgbaToHex, rgbaToHsva } from '@uiw/color-convert';
 import { Sketch } from '@uiw/react-color';
 import { ChevronDown } from 'lucide-react';
@@ -70,12 +70,12 @@ const Color = ({
       className={twMerge('flex items-center justify-between', className)}
       {...props}
     >
-      <div className="flex items-center gap-1 px-2 select-none py-0.5 rounded-md text-slate-700 bg-slate-100 relative">
+      <div className="flex z-10 items-center gap-1 px-2 select-none py-0.5 rounded-md text-slate-700 bg-slate-100 relative">
         <p className="select-text">
           {value ? rgbaToHex(fractionRgbaToIntRgba(value)) : '?'}
         </p>
-        <Ariakit.PopoverProvider>
-          <Ariakit.PopoverDisclosure>
+        <Popover.Root>
+          <Popover.Trigger>
             {value && (
               <ChevronDown
                 size={16}
@@ -83,18 +83,25 @@ const Color = ({
                 className="cursor-pointer stroke-slate-500"
               />
             )}
-          </Ariakit.PopoverDisclosure>
-          <Ariakit.Popover arrowPadding={0}>
-            <Sketch
-              className="absolute -right-4 top-2"
-              color={rgbaToHsva(fractionRgbaToIntRgba(value as IColor))}
-              onChange={(c) =>
-                onValueChange &&
-                onValueChange(IntRgbaToFractionRgba(c.rgba as IColor))
-              }
-            />
-          </Ariakit.Popover>
-        </Ariakit.PopoverProvider>
+          </Popover.Trigger>
+          <Popover.Portal>
+            <Popover.Content
+              align="end"
+              alignOffset={-8}
+              sideOffset={8}
+              className="z-50"
+            >
+              <Sketch
+                className=""
+                color={rgbaToHsva(fractionRgbaToIntRgba(value as IColor))}
+                onChange={(c) =>
+                  onValueChange &&
+                  onValueChange(IntRgbaToFractionRgba(c.rgba as IColor))
+                }
+              />
+            </Popover.Content>
+          </Popover.Portal>
+        </Popover.Root>
       </div>
     </div>
   );
