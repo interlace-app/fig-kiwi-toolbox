@@ -1,4 +1,5 @@
-import { GUID, NodeChange } from '../kiwi/schema';
+import { arrayToTree } from 'performant-array-to-tree';
+import { NodeChange } from '../kiwi/schema';
 
 export const asciiToInt = (ascii: string) => {
   var sum = 0;
@@ -9,11 +10,19 @@ export const asciiToInt = (ascii: string) => {
   return sum;
 };
 
-type EditorNode = {
-  parentNodeGUID: GUID;
-  childrenNodeGUIDs: GUID[];
-};
-
-export const createNodeChangTree = (nodeChanges: NodeChange[]) => {
-  return;
+export const createNodeChangeTree = (nodeChanges: NodeChange[]) => {
+  const nodes = nodeChanges.map((c, i) => {
+    const id = `${c.guid?.sessionID}-${c.guid?.localID}`;
+    let parentId = null;
+    if (c.parentIndex) {
+      parentId = `${c.parentIndex?.guid?.sessionID}-${c.parentIndex?.guid?.localID}`;
+    }
+    return {
+      id: id,
+      parentId: parentId,
+      index: i,
+    };
+  });
+  const tree = arrayToTree(nodes);
+  return tree;
 };
