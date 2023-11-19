@@ -17,7 +17,7 @@ const Root = ({ className, children, name, ...props }: PropProps) => {
       {...props}
     >
       <p>{name}</p>
-      {children}
+      <div className="flex gap-1">{children}</div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { twMerge } from 'tailwind-merge';
 import { Prop } from '.';
 import { Color, NodeChange as INodeChange } from '../../kiwi/schema';
+import { asciiToInt } from '../../utils';
 
 export interface NodeChangeProps extends React.HTMLAttributes<HTMLDivElement> {
   nodeChange: INodeChange;
@@ -29,6 +30,14 @@ export const NodeChange = ({
       {nodeChange.name && (
         <Prop.Root name="Name">
           <Prop.String value={nodeChange.name} />
+        </Prop.Root>
+      )}
+      {nodeChange.parentIndex && (
+        <Prop.Root name="Parent index - position">
+          <Prop.String value={nodeChange.parentIndex.position} />
+          <Prop.String
+            value={asciiToInt(nodeChange.parentIndex.position).toString()}
+          />
         </Prop.Root>
       )}
       {nodeChange.fillPaints && nodeChange.fillPaints?.length > 0 && (
