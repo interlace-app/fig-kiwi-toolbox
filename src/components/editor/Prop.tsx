@@ -40,7 +40,7 @@ const Value = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={twMerge(
-      'flex gap-1 items-center px-2 py-0.5 rounded-md text-slate-900 bg-slate-100',
+      'flex gap-1 h-full items-center px-2 py-0.5 rounded-md text-slate-900 bg-slate-100',
       className,
     )}
     {...props}
@@ -86,7 +86,6 @@ const String = ({
       )}
       {isLinkable && (
         <Value>
-          ...
           <ChevronDown
             size={16}
             onClick={() => {}}
@@ -116,7 +115,6 @@ const Number = ({
       )}
       {isLinkable && (
         <Value>
-          ...
           <ChevronDown
             size={16}
             onClick={() => {}}

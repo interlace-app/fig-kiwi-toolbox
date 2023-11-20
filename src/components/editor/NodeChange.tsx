@@ -39,18 +39,25 @@ export const NodeChange = ({
     return <></>;
   }
   const colors = typeColorMap(nodeChange.type);
-  const propsToShow: { name: string; type: SupportedTypes }[] = [
+  const propsToShow: {
+    name: string;
+    type: SupportedTypes;
+    isLinkable: boolean;
+  }[] = [
     {
       name: 'name',
       type: 'string',
+      isLinkable: false,
     },
     {
       name: 'cornerRadius',
       type: 'number',
+      isLinkable: true,
     },
     {
       name: 'fontSize',
       type: 'number',
+      isLinkable: true,
     },
   ];
   return (
@@ -78,6 +85,7 @@ export const NodeChange = ({
                     //@ts-expect-error
                     value={nodeChange[p.name]}
                     type={p.type}
+                    isLinkable={p.isLinkable}
                     linkPath={[...parentLinkPath, p.name]}
                   />
                 </Prop.Root>

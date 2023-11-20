@@ -37,9 +37,9 @@ export const EditorPane = () => {
   };
 
   return (
-    <div className="absolute z-50 flex flex-col w-3/12 max-w-lg bg-white border shadow-xl rounded-xl inset-y-3 right-3 border-slate-200">
+    <div className="absolute z-50 flex flex-col w-3/12 max-w-lg min-w-[320px] bg-white border shadow-xl rounded-xl inset-y-3 right-3 border-slate-200">
       <div className="px-4 py-3 border-b border-slate-300">
-        <span className="text-xl font-medium">Edit data</span>
+        <span className="text-xl font-medium">Link to theme</span>
       </div>
       <div className="flex flex-col flex-1 gap-2 px-4 py-4 overflow-y-auto">
         <p className="font-semibold text-md">Node changes</p>
