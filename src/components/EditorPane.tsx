@@ -1,9 +1,8 @@
 import { useAtom } from 'jotai';
 import _ from 'lodash';
-import { TreeItem } from 'performant-array-to-tree';
 import { NodeChange } from '.';
 import { atoms } from '../contexts';
-import { createNodeChangeTree } from '../utils';
+import { TreeItem, createNodeChangeTree } from '../utils';
 
 export const EditorPane = () => {
   const [modifiedFigData, setModifiedFigData] = useAtom(atoms.modifiedFigData);
@@ -12,10 +11,14 @@ export const EditorPane = () => {
     return <></>;
   }
 
-  const tree = createNodeChangeTree(modifiedFigData.nodeChanges);
-  console.log(tree);
+  const tree = modifiedFigData.nodeChanges
+    ? createNodeChangeTree(modifiedFigData.nodeChanges)
+    : [];
 
   const renderNodeChange = (item: TreeItem) => {
+    if (!item || !modifiedFigData.nodeChanges) {
+      return <></>;
+    }
     return (
       <NodeChange
         nodeChange={modifiedFigData.nodeChanges[item.data.index]}
@@ -27,7 +30,7 @@ export const EditorPane = () => {
           setModifiedFigData(modifiedFigData);
         }}
       >
-        {item.children.map((c) => renderNodeChange(c))}
+        {item.children.map((c: TreeItem) => renderNodeChange(c))}
       </NodeChange>
     );
   };

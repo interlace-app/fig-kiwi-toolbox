@@ -31,6 +31,9 @@ export const NodeChange = ({
   children,
   ...props
 }: NodeChangeProps) => {
+  if (!nodeChange.type) {
+    return <></>;
+  }
   const colors = typeColorMap(nodeChange.type);
   return (
     <div

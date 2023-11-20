@@ -10,6 +10,11 @@ export const asciiToInt = (ascii: string) => {
   return sum;
 };
 
+export type TreeItem = {
+  children: TreeItem[];
+  data: { id: string; parentId: string; index: number };
+};
+
 export const createNodeChangeTree = (nodeChanges: NodeChange[]) => {
   const nodes = nodeChanges.map((c, i) => {
     const id = `${c.guid?.sessionID}-${c.guid?.localID}`;
@@ -23,6 +28,6 @@ export const createNodeChangeTree = (nodeChanges: NodeChange[]) => {
       index: i,
     };
   });
-  const tree = arrayToTree(nodes);
+  const tree = arrayToTree(nodes) as TreeItem[];
   return tree;
 };
