@@ -1,5 +1,6 @@
 import { atom } from 'jotai';
 import { Message, Schema } from '../kiwi/schema';
+import { Links } from '../types';
 import { analyzeClipboardData, generateClipboardData } from '../utils';
 
 const _clipboardData = atom('');
@@ -17,6 +18,14 @@ const clipboardData = atom(
 
 const _clipboardFig = atom(analyzeClipboardData(''));
 const clipboardFig = atom((get) => get(_clipboardFig));
+
+const _links = atom<Links>({});
+const links = atom(
+  (get) => get(_links),
+  (_get, set, value: Message) => {
+    set(_links, value);
+  },
+);
 
 //STUB - type with pre-extracted schema
 const _modifiedFigData = atom<Message>({});
@@ -56,6 +65,7 @@ export const atoms = {
   clipboardData,
   clipboardFig,
   clipboardDataLastUpdated,
+  links,
   modifiedFigData,
   exportedFig,
   exportedFigLastUpdated,

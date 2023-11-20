@@ -1,10 +1,13 @@
 import { twMerge } from 'tailwind-merge';
 import { Prop } from '.';
 import { Color, NodeChange as INodeChange, NodeType } from '../../kiwi/schema';
+import { LinkPath, SupportedTypes } from '../../types';
+import { camalCaseToSentenceCase } from '../../utils/text';
 
 export interface NodeChangeProps extends React.HTMLAttributes<HTMLDivElement> {
   nodeChange: INodeChange;
   onChangeTest: (color: Color) => void;
+  parentLinkPath: LinkPath;
 }
 
 const typeColorMap = (type: NodeType) => {
@@ -28,6 +31,7 @@ export const NodeChange = ({
   className,
   nodeChange,
   onChangeTest,
+  parentLinkPath,
   children,
   ...props
 }: NodeChangeProps) => {
@@ -35,6 +39,20 @@ export const NodeChange = ({
     return <></>;
   }
   const colors = typeColorMap(nodeChange.type);
+  const propsToShow: { name: string; type: SupportedTypes }[] = [
+    {
+      name: 'name',
+      type: 'string',
+    },
+    {
+      name: 'cornerRadius',
+      type: 'number',
+    },
+    {
+      name: 'fontSize',
+      type: 'number',
+    },
+  ];
   return (
     <div
       className={twMerge(
@@ -51,10 +69,19 @@ export const NodeChange = ({
       )}
       <div className="flex flex-col pl-1">
         <div className="flex flex-col gap-1 pl-1">
-          {nodeChange.name && (
-            <Prop.Root name="Name">
-              <Prop.String value={nodeChange.name} />
-            </Prop.Root>
+          {propsToShow.map(
+            (p) =>
+              //@ts-expect-error
+              nodeChange[p.name] != undefined && (
+                <Prop.Root name={camalCaseToSentenceCase(p.name)} key={p.name}>
+                  <Prop.Item
+                    //@ts-expect-error
+                    value={nodeChange[p.name]}
+                    type={p.type}
+                    linkPath={[...parentLinkPath, p.name]}
+                  />
+                </Prop.Root>
+              ),
           )}
           {/* {nodeChange.parentIndex && (
         <Prop.Root name="Parent index - position">
@@ -64,14 +91,15 @@ export const NodeChange = ({
           />
         </Prop.Root>
       )} */}
-          {nodeChange.fillPaints && nodeChange.fillPaints?.length > 0 && (
+          {/* {nodeChange.fillPaints && nodeChange.fillPaints?.length > 0 && (
             <Prop.Root name="Fill">
               <Prop.Color
                 value={nodeChange.fillPaints[0]?.color}
+                linkPath={[...parentLinkPath, 'fill', 0]}
                 onValueChange={onChangeTest}
               />
             </Prop.Root>
-          )}
+          )} */}
         </div>
         <div className="flex flex-col mt-2">{children}</div>
       </div>

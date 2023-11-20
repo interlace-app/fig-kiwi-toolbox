@@ -29,6 +29,7 @@ export const EditorPane = () => {
           newData.nodeChanges[i].fillPaints[0].color = c;
           setModifiedFigData(modifiedFigData);
         }}
+        parentLinkPath={['nodeChanges', item.data.index]}
       >
         {item.children.map((c: TreeItem) => renderNodeChange(c))}
       </NodeChange>
