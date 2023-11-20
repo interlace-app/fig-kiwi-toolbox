@@ -1,6 +1,4 @@
-import { useAtom } from 'jotai';
 import ky from 'ky';
-import _ from 'lodash';
 import { useState } from 'react';
 import ReactFlow, {
   Background,
@@ -10,8 +8,7 @@ import ReactFlow, {
   useNodesState,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import { NodeChange } from './components';
-import { atoms } from './contexts';
+import { EditorPane } from './components';
 import {
   CopyNode,
   DecodeFigNode,
@@ -35,7 +32,6 @@ const App = () => {
   const [validated, setValidated] = useState(
     window.location.href.includes('localhost'),
   );
-  const [modifiedFigData, setModifiedFigData] = useAtom(atoms.modifiedFigData);
 
   const initialNodes = [
     {
@@ -121,28 +117,7 @@ const App = () => {
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
-      {!_.isEmpty(modifiedFigData) && (
-        <div className="absolute z-50 flex flex-col w-3/12 max-w-lg bg-white border shadow-xl rounded-xl inset-y-3 right-3 border-slate-200">
-          <div className="px-4 py-3 border-b border-slate-300">
-            <span className="text-xl font-medium">Edit data</span>
-          </div>
-          <div className="flex flex-col flex-1 gap-2 px-4 py-4 overflow-y-auto">
-            <p className="font-semibold text-md">Node changes</p>
-            {modifiedFigData.nodeChanges?.map((nodeChange, i) => (
-              <NodeChange
-                nodeChange={nodeChange}
-                key={i}
-                onChangeTest={(c) => {
-                  const newData = modifiedFigData;
-                  //@ts-expect-error
-                  newData.nodeChanges[i].fillPaints[0].color = c;
-                  setModifiedFigData(modifiedFigData);
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      )}
+      <EditorPane />
       <ReactFlow
         nodes={nodes}
         edges={edges}
